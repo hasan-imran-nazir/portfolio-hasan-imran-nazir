@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "motion/react";
 import {
   SiTypescript,
@@ -13,6 +12,7 @@ import {
   SiNodedotjs,
   SiExpress,
   SiMysql,
+  SiMongodb,
   SiGit,
   SiGithub,
   SiLinux,
@@ -31,14 +31,25 @@ interface Skill {
 
 interface SkillGroup {
   title: string;
-  tint: string;
+  subtitle: string;
+  tile: string;
+  accent: string;
   skills: Skill[];
 }
+
+const coreStack = [
+  { name: "React", icon: SiReact, color: "#0EA5E9" },
+  { name: "Next.js", icon: SiNextdotjs, color: "#111827" },
+  { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+  { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
+];
 
 const skillGroups: SkillGroup[] = [
   {
     title: "Frontend Development",
-    tint: "bg-lime",
+    subtitle: "Interfaces & UI implementation",
+    tile: "bg-primary/10 text-primary",
+    accent: "text-primary",
     skills: [
       { name: "HTML5", icon: SiHtml5, color: "#E44D26" },
       { name: "CSS3", icon: SiCss, color: "#264DE4" },
@@ -54,16 +65,21 @@ const skillGroups: SkillGroup[] = [
   },
   {
     title: "Backend & Database",
-    tint: "bg-cyan",
+    subtitle: "Server-side fundamentals",
+    tile: "bg-cyan-soft/70 text-secondary",
+    accent: "text-secondary",
     skills: [
       { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
       { name: "Express.js", icon: SiExpress, color: "#323330" },
       { name: "MySQL", icon: SiMysql, color: "#00758F" },
+      { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
     ],
   },
   {
     title: "Tools & Platforms",
-    tint: "bg-pink-soft",
+    subtitle: "Workflow & deployment",
+    tile: "bg-rose-soft text-tertiary",
+    accent: "text-tertiary",
     skills: [
       { name: "Git", icon: SiGit, color: "#F05032" },
       { name: "GitHub", icon: SiGithub, color: "#181717" },
@@ -73,7 +89,9 @@ const skillGroups: SkillGroup[] = [
   },
   {
     title: "Other Skills",
-    tint: "bg-lime-strong",
+    subtitle: "Collaboration & craft",
+    tile: "bg-emerald-soft text-emerald",
+    accent: "text-emerald",
     skills: [
       { name: "UI/UX Fundamentals", icon: MdOutlineDesignServices, color: "#EC4899" },
       { name: "Problem-Solving", icon: BsLightbulb, color: "#B45309" },
@@ -83,28 +101,7 @@ const skillGroups: SkillGroup[] = [
   },
 ];
 
-const skillsJson = `{
-  "name": "Hasan Imran Nazir",
-  "role": "Front-End Developer",
-  "focus": ["React", "Next.js", "TypeScript", "Tailwind CSS"],
-  "backend": ["Node.js", "Express.js", "MySQL"],
-  "tools": ["Git", "GitHub", "Linux", "Deployment"],
-  "status": "4th Year · 7th Semester"
-}`;
-
 export default function Skills() {
-  const [copied, setCopied] = useState(false);
-
-  const copyJson = async () => {
-    try {
-      await navigator.clipboard.writeText(skillsJson);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      setCopied(false);
-    }
-  };
-
   return (
     <section id="skills" className="shell section">
       <SectionHeading
@@ -114,7 +111,27 @@ export default function Skills() {
         description="What I use today, and what I'm actively learning as I grow as a developer."
       />
 
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
+      {/* Core stack highlight strip */}
+      <div className="mt-8 flex flex-wrap items-center gap-3">
+        <span className="mono-label text-subtle">Core stack //</span>
+        {coreStack.map((skill) => {
+          const Icon = skill.icon;
+          return (
+            <span
+              key={skill.name}
+              className="glass inline-flex items-center gap-2 rounded-full px-4 py-2"
+            >
+              <Icon size={18} style={{ color: skill.color }} />
+              <span className="mono-label text-[12px] text-ink">
+                {skill.name}
+              </span>
+            </span>
+          );
+        })}
+      </div>
+
+      {/* Categorised skill cards */}
+      <div className="mt-6 grid gap-6 md:grid-cols-2">
         {skillGroups.map((group, index) => (
           <motion.article
             key={group.title}
@@ -122,90 +139,62 @@ export default function Skills() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.4, delay: index * 0.07 }}
-            className="card flex flex-col"
+            className="glass flex flex-col rounded-3xl p-6"
           >
-            <div
-              className={`flex items-center justify-between gap-3 border-b-[3px] border-ink px-4 py-3 ${group.tint}`}
-            >
-              <span className="mono-label">{group.title}</span>
-              <span className="tag bg-surface">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <span className={`icon-tile h-11 w-11 ${group.tile}`}>
+                  {(() => {
+                    const First = group.skills[0].icon;
+                    return <First size={20} style={{ color: "currentColor" }} />;
+                  })()}
+                </span>
+                <div>
+                  <h3 className="h-card text-base text-ink">{group.title}</h3>
+                  <p className="mono-label mt-1 text-[11px] text-subtle">
+                    {group.subtitle}
+                  </p>
+                </div>
+              </div>
+              <span className="tag">
                 {String(group.skills.length).padStart(2, "0")}
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2.5 p-4 sm:grid-cols-3">
+            <div className="mt-5 flex flex-wrap gap-2.5">
               {group.skills.map((skill) => {
                 const Icon = skill.icon;
                 return (
-                  <div
+                  <span
                     key={skill.name}
-                    className="tag justify-start bg-panel-2 py-2.5 transition-colors hover:bg-lime"
+                    className="tag justify-start bg-white/80 py-2.5 text-[13px] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary"
                     title={skill.name}
                   >
-                    <Icon size={15} style={{ color: skill.color }} />
-                    <span className="truncate">{skill.name}</span>
-                  </div>
+                    <Icon size={17} style={{ color: skill.color }} />
+                    <span>{skill.name}</span>
+                  </span>
                 );
               })}
+            </div>
+
+            {/* Visual proportion bar */}
+            <div className="mt-auto pt-5">
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-panel">
+                <div
+                  className={`h-full rounded-full bg-gradient-to-r from-primary to-secondary-bright ${
+                    index % 2 === 0 ? "w-[78%]" : "w-[52%]"
+                  }`}
+                />
+              </div>
+              <p className={`mono-label mt-2 text-[11px] ${group.accent}`}>
+                {index % 2 === 0 ? "Primary daily toolkit" : "Supporting toolkit"}
+              </p>
             </div>
           </motion.article>
         ))}
       </div>
 
-      {/* skills.json terminal */}
-      <div className="mt-8 border-4 border-ink bg-ink p-4 shadow-[8px_8px_0_0_#1b1b1b] sm:p-5">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-neutral-700 pb-3">
-          <span className="mono-label text-lime">
-            hasan@portfolio:~$ cat skills.json
-          </span>
-          <button
-            type="button"
-            onClick={copyJson}
-            className="mono-label border-2 border-neutral-600 bg-neutral-900 px-2.5 py-1 text-[10px] text-white transition-colors hover:border-lime hover:text-lime"
-          >
-            {copied ? "[ Copied ]" : "[ Copy JSON ]"}
-          </button>
-        </div>
-
-        <pre className="mt-3 overflow-x-auto font-mono text-[12.5px] leading-relaxed whitespace-pre-wrap text-white sm:text-[13px]">
-          <span className="text-cyan">{"{"}</span>
-          {"\n  "}
-          <span className="text-lime">&quot;name&quot;</span>:{" "}
-          <span className="text-pink-soft">&quot;Hasan Imran Nazir&quot;</span>,
-          {"\n  "}
-          <span className="text-lime">&quot;role&quot;</span>:{" "}
-          <span className="text-pink-soft">&quot;Front-End Developer&quot;</span>,
-          {"\n  "}
-          <span className="text-lime">&quot;focus&quot;</span>: [
-          <span className="text-pink-soft">
-            &quot;React&quot;, &quot;Next.js&quot;, &quot;TypeScript&quot;,
-            &quot;Tailwind CSS&quot;
-          </span>
-          ],
-          {"\n  "}
-          <span className="text-lime">&quot;backend&quot;</span>: [
-          <span className="text-pink-soft">
-            &quot;Node.js&quot;, &quot;Express.js&quot;, &quot;MySQL&quot;
-          </span>
-          ],
-          {"\n  "}
-          <span className="text-lime">&quot;tools&quot;</span>: [
-          <span className="text-pink-soft">
-            &quot;Git&quot;, &quot;GitHub&quot;, &quot;Linux&quot;,
-            &quot;Deployment&quot;
-          </span>
-          ],
-          {"\n  "}
-          <span className="text-lime">&quot;status&quot;</span>:{" "}
-          <span className="text-pink-soft">
-            &quot;4th Year · 7th Semester&quot;
-          </span>
-          {"\n"}
-          <span className="text-cyan">{"}"}</span>
-        </pre>
-      </div>
-
-      <p className="mt-5 text-xs text-muted">
+      <p className="mt-6 text-sm leading-6 text-subtle">
         Skill list reflects my current learning and experience; I continue to
         improve through practice and projects.
       </p>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, FileText } from "lucide-react";
+import { Menu, X, FileText, ArrowUpRight } from "lucide-react";
 
 const navigation = [
   { label: "Home", href: "#home" },
@@ -38,21 +38,26 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b-[3px] border-ink bg-surface">
-      <div className="shell flex h-16 items-center justify-between gap-4">
+    <header className="sticky top-4 z-50 w-full px-3 sm:px-4">
+      {/* Floating pill navigation */}
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 rounded-full border border-white/60 bg-surface/80 px-4 py-2.5 shadow-lg shadow-primary/5 backdrop-blur-xl sm:px-6">
         {/* Monogram + wordmark */}
         <Link
           href="#home"
           onClick={() => setMenuOpen(false)}
-          className="flex shrink-0 items-center gap-3"
+          className="group flex shrink-0 items-center gap-3"
         >
-          <span className="flex h-9 w-9 items-center justify-center border-[3px] border-ink bg-lime shadow-[3px_3px_0_0_#1b1b1b]">
-            <span className="mono-label">HN</span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink font-display text-sm font-extrabold text-white shadow-md transition-colors duration-200 group-hover:bg-primary">
+            H
           </span>
           <span className="hidden flex-col leading-none sm:flex">
-            <span className="h-card text-[15px]">Hasan Imran Nazir</span>
-            <span className="mono-label mt-1 text-[10px] text-muted">
-              {"// Front-End"}
+            <span className="mono-label text-[12px] text-ink">
+              HASAN.DEV{" "}
+              <span className="text-subtle">{"// Front-End"}</span>
+            </span>
+            <span className="mt-1 flex items-center gap-1.5 font-mono text-[10px] text-subtle">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald animate-pulse" />
+              Open to work
             </span>
           </span>
         </Link>
@@ -60,7 +65,7 @@ export default function Header() {
         {/* Desktop navigation */}
         <nav
           aria-label="Main navigation"
-          className="hidden items-center gap-1 md:flex"
+          className="hidden items-center gap-1 lg:flex"
         >
           {navigation.map((item) => {
             const isActive = activeSection === item.href;
@@ -68,40 +73,39 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`mono-label border-[3px] border-transparent px-2.5 py-2 transition-colors lg:px-3 ${
+                className={`mono-label rounded-full px-3 py-2 text-[11px] transition-all duration-200 ${
                   isActive
-                    ? "bg-lime text-ink shadow-[3px_3px_0_0_#1b1b1b]"
-                    : "text-ink hover:border-ink hover:bg-cyan"
+                    ? "bg-primary/10 text-primary-deep shadow-[inset_0_0_0_1px_rgba(79,70,229,0.25)]"
+                    : "text-muted hover:bg-white/70 hover:text-primary"
                 }`}
               >
-                <span className="hidden text-muted lg:inline">{"// "}</span>
                 {item.label}
               </Link>
             );
           })}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-3">
-          <span className="hidden items-center gap-2 border-[3px] border-ink bg-lime px-3 py-1.5 shadow-[3px_3px_0_0_#1b1b1b] lg:inline-flex">
-            <span className="h-2.5 w-2.5 animate-pulse bg-ink" />
-            <span className="mono-label text-[10px]">Open to work</span>
-          </span>
-
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <button
             type="button"
             aria-label="Resume"
-            className="btn btn-sm hidden lg:inline-flex"
+            className="btn btn-sm btn-ghost hidden lg:inline-flex"
           >
             <FileText size={14} />
             Resume
           </button>
+
+          <Link href="#contact" className="btn btn-sm btn-primary hidden sm:inline-flex">
+            Get in Touch
+            <ArrowUpRight size={14} />
+          </Link>
 
           <button
             type="button"
             aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
-            className="icon-btn md:hidden"
+            className="icon-btn lg:hidden"
           >
             {menuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -110,21 +114,24 @@ export default function Header() {
 
       {/* Mobile navigation */}
       {menuOpen && (
-        <div className="border-t-[3px] border-ink bg-surface md:hidden">
-          <nav className="shell flex flex-col gap-2 py-4" aria-label="Mobile navigation">
+        <div className="mx-auto mt-3 w-full max-w-6xl rounded-3xl border border-white/70 bg-surface/90 p-3 shadow-xl shadow-primary/10 backdrop-blur-xl lg:hidden">
+          <nav
+            className="flex flex-col gap-1.5"
+            aria-label="Mobile navigation"
+          >
             {navigation.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className={`mono-label border-[3px] border-ink px-3 py-3 ${
+                className={`mono-label flex items-center justify-between rounded-2xl px-4 py-3 text-[12px] transition-colors ${
                   activeSection === item.href
-                    ? "bg-lime shadow-[3px_3px_0_0_#1b1b1b]"
-                    : "bg-surface"
+                    ? "bg-primary/10 text-primary-deep"
+                    : "text-muted hover:bg-white/70 hover:text-primary"
                 }`}
               >
-                <span className="text-muted">{"// "}</span>
                 {item.label}
+                <span className="text-subtle">{"//"}</span>
               </Link>
             ))}
 

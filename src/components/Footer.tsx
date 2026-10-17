@@ -20,73 +20,33 @@ const socials = [
   { label: "Facebook", href: "https://facebook.com/", icon: FiFacebook, color: "#1877F2" },
 ];
 
-const marqueeItems = [
-  "/// Front-End Developer",
-  "/// React & Next.js",
-  "/// TypeScript & Tailwind CSS",
-  "/// Responsive Interface Design",
-  "/// Component-Based Development",
-];
-
-function MarqueeHalf() {
-  return (
-    <div className="flex shrink-0 items-center">
-      {marqueeItems.map((item) => (
-        <span key={item} className="mono-label px-5 text-sm whitespace-nowrap">
-          {item}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t-4 border-ink bg-surface">
-      {/* Marquee strip */}
-      <div className="overflow-hidden border-b-4 border-ink bg-lime py-3">
-        <div className="animate-marquee">
-          <MarqueeHalf />
-          <MarqueeHalf />
-        </div>
-      </div>
-
+    <footer className="border-t border-line/40 bg-surface/70 backdrop-blur-xl">
       <div className="shell py-12">
         <div className="grid gap-10 sm:grid-cols-[1.5fr_1fr_1fr]">
+          {/* Brand */}
           <div>
             <div className="flex items-center gap-3">
-              <span className="flex h-9 w-9 items-center justify-center border-[3px] border-ink bg-cyan shadow-[3px_3px_0_0_#1b1b1b]">
-                <span className="mono-label">HN</span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-ink font-display text-sm font-extrabold text-white shadow-md">
+                H
               </span>
-              <span className="h-card text-[15px]">Hasan Imran Nazir</span>
+              <span className="flex flex-col leading-none">
+                <span className="h-card text-[15px] text-ink">
+                  Hasan Imran Nazir
+                </span>
+                <span className="mono-label mt-1.5 text-[10px] text-subtle">
+                  {"// Front-End Developer"}
+                </span>
+              </span>
             </div>
-            <p className="mt-4 max-w-xs text-sm leading-6 text-muted">
-              A Computer Science and Engineering student passionate about
-              building clean, responsive, and user-friendly web applications.
+            <p className="mt-4 max-w-xs text-[15px] leading-7 text-muted">
+              A front-end developer building clean, responsive, and
+              user-friendly web applications with React and Next.js.
             </p>
-          </div>
-
-          <nav aria-label="Footer navigation">
-            <p className="mono-label text-muted">{"//"} Navigate</p>
-            <ul className="mt-4 grid grid-cols-2 gap-y-3">
-              {quickLinks.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="mono-label text-[11px] transition-colors hover:text-pink"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div>
-            <p className="mono-label text-muted">{"//"} Elsewhere</p>
-            <div className="mt-4 flex flex-wrap gap-2.5">
+            <div className="mt-5 flex flex-wrap gap-2.5">
               {socials.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -96,7 +56,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="icon-btn !h-10 !w-10"
+                    className="icon-btn h-10 w-10"
                   >
                     <Icon size={16} style={{ color: social.color }} />
                   </a>
@@ -105,28 +65,76 @@ export default function Footer() {
               <a
                 href="mailto:hasanimrannazir@gmail.com"
                 aria-label="Email"
-                className="icon-btn !h-10 !w-10"
+                className="icon-btn h-10 w-10"
               >
                 <FiMail size={16} />
               </a>
             </div>
           </div>
+
+          {/* Navigate */}
+          <nav aria-label="Footer navigation">
+            <p className="mono-label text-subtle">Navigate</p>
+            <ul className="mt-4 grid grid-cols-2 gap-y-3">
+              {quickLinks.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="mono-label text-[11px] text-muted transition-colors hover:text-primary"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Elsewhere */}
+          <div>
+            <p className="mono-label text-subtle">Elsewhere</p>
+            <ul className="mt-4 grid gap-y-3">
+              <li>
+                <a
+                  href="https://github.com/hasan-imran-nazir"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mono-label text-[11px] text-muted transition-colors hover:text-primary"
+                >
+                  GitHub
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/hasanimrannazir/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mono-label text-[11px] text-muted transition-colors hover:text-primary"
+                >
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:hasanimrannazir@gmail.com"
+                  className="mono-label text-[11px] text-muted transition-colors hover:text-primary"
+                >
+                  Email
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t-4 border-ink pt-6 sm:flex-row sm:items-center">
-          <p className="mono-label text-[11px] text-muted">
-            © {currentYear} Hasan Imran Nazir // All rights reserved.
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-line/40 pt-6 sm:flex-row sm:items-center">
+          <p className="mono-label text-[11px] text-subtle">
+            © {currentYear} Hasan Imran Nazir · All rights reserved.
           </p>
 
           <div className="flex items-center gap-3">
-            <span className="mono-label text-[11px] text-muted">
-              Build: neo-brutal // Status: online
+            <span className="mono-label hidden text-[11px] text-subtle sm:inline">
+              Built with Next.js &amp; Tailwind CSS
             </span>
-            <a
-              href="#home"
-              className="btn btn-sm"
-              aria-label="Back to top"
-            >
+            <a href="#home" className="btn btn-sm btn-ghost" aria-label="Back to top">
               <ArrowUp size={14} />
               Top
             </a>

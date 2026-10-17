@@ -2,12 +2,10 @@
 
 import { useState, type FormEvent } from "react";
 import { motion } from "motion/react";
-import { Send, ArrowUpRight, Mail } from "lucide-react";
+import { Send, ArrowUpRight, Copy, Check } from "lucide-react";
 import {
   FiGithub,
   FiLinkedin,
-  FiTwitter,
-  FiFacebook,
   FiMail,
   FiPhone,
 } from "react-icons/fi";
@@ -20,47 +18,53 @@ interface IconProps {
   style?: React.CSSProperties;
 }
 
+const EMAIL = "hin26@outlook.com";
+
 const contactDetails: {
   label: string;
   value: string;
   href: string;
   icon: ComponentType<IconProps>;
-  color: string;
-  soft: string;
+  tile: string;
   external?: boolean;
 }[] = [
   {
     label: "Email",
-    value: "hasanimrannazir@gmail.com",
-    href: "mailto:hasanimrannazir@gmail.com",
+    value: EMAIL,
+    href: `mailto:${EMAIL}`,
     icon: FiMail,
-    color: "#DC2626",
-    soft: "#FDE8E8",
+    tile: "bg-rose-soft text-tertiary",
   },
   {
     label: "Phone",
-    value: "+880 1234-567890",
-    href: "tel:+8801234567890",
+    value: "+880 1789-063974",
+    href: "tel:+8801789063974",
     icon: FiPhone,
-    color: "#2563EB",
-    soft: "#E7EEFD",
+    tile: "bg-primary/10 text-primary",
   },
   {
     label: "WhatsApp",
     value: "Chat on WhatsApp",
-    href: "https://wa.me/8801234567890",
+    href: "https://wa.me/8801789063974",
     icon: SiWhatsapp,
-    color: "#16A34A",
-    soft: "#E6F8EE",
+    tile: "bg-emerald-soft text-emerald",
     external: true,
   },
 ];
 
 const socials = [
-  { label: "GitHub", href: "https://github.com/hasan-imran-nazir", icon: FiGithub, color: "#181717" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/hasanimrannazir/", icon: FiLinkedin, color: "#0A66C2" },
-  { label: "Twitter", href: "https://twitter.com/", icon: FiTwitter, color: "#1DA1F2" },
-  { label: "Facebook", href: "https://facebook.com/", icon: FiFacebook, color: "#1877F2" },
+  {
+    label: "GitHub",
+    href: "https://github.com/hasan-imran-nazir",
+    icon: FiGithub,
+    color: "#181717",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/hasanimrannazir/",
+    icon: FiLinkedin,
+    color: "#0A66C2",
+  },
 ];
 
 export default function Contact() {
@@ -69,20 +73,31 @@ export default function Contact() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [notice, setNotice] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const mailSubject = encodeURIComponent(
-      subject.trim() || `Portfolio enquiry from ${name.trim() || "visitor"}`
+      subject.trim() || `Portfolio enquiry from ${name.trim() || "visitor"}`,
     );
     const mailBody = encodeURIComponent(
-      `${message}\n\n— ${name}\n${email}`.trim()
+      `${message}\n\n— ${name}\n${email}`.trim(),
     );
 
-    window.location.href = `mailto:hasanimrannazir@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+    window.location.href = `mailto:${EMAIL}?subject=${mailSubject}&body=${mailBody}`;
     setNotice(true);
     setTimeout(() => setNotice(false), 6000);
+  };
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
   };
 
   return (
@@ -94,24 +109,29 @@ export default function Contact() {
         description="Reach out if you'd like to collaborate, discuss a project, or just say hello."
       />
 
-      <div className="mt-10 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="mt-10 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         {/* Form */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.4 }}
-          className="card card-lg p-5 sm:p-7"
+          className="glass rounded-3xl p-6 sm:p-8"
         >
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b-[3px] border-ink pb-3">
-            <span className="mono-label">{"// Dispatch message"}</span>
-            <span className="tag bg-lime">Opens your mail app</span>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line/40 pb-4">
+            <span className="mono-label text-ink">{"// Dispatch message"}</span>
+            <span className="tag bg-primary/10 text-primary">
+              Opens your mail app
+            </span>
           </div>
 
           <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <label htmlFor="name" className="mono-label block text-[11px]">
+                <label
+                  htmlFor="name"
+                  className="mono-label block text-[11px] text-muted"
+                >
                   01 // Name
                 </label>
                 <input
@@ -125,7 +145,10 @@ export default function Contact() {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="mono-label block text-[11px]">
+                <label
+                  htmlFor="email"
+                  className="mono-label block text-[11px] text-muted"
+                >
                   02 // Email
                 </label>
                 <input
@@ -141,7 +164,10 @@ export default function Contact() {
             </div>
 
             <div>
-              <label htmlFor="subject" className="mono-label block text-[11px]">
+              <label
+                htmlFor="subject"
+                className="mono-label block text-[11px] text-muted"
+              >
                 03 // Subject
               </label>
               <input
@@ -155,7 +181,10 @@ export default function Contact() {
             </div>
 
             <div>
-              <label htmlFor="message" className="mono-label block text-[11px]">
+              <label
+                htmlFor="message"
+                className="mono-label block text-[11px] text-muted"
+              >
                 04 // Message
               </label>
               <textarea
@@ -175,9 +204,9 @@ export default function Contact() {
             </button>
 
             {notice && (
-              <p className="mono-label border-[3px] border-ink bg-cyan px-3 py-2.5 text-[11px] leading-relaxed">
+              <p className="mono-label rounded-2xl border border-primary/25 bg-primary/10 px-4 py-3 text-[11px] leading-relaxed text-primary-deep">
                 {"// Opening your email app. If nothing happens, write to "}
-                hasanimrannazir@gmail.com
+                {EMAIL}
               </p>
             )}
           </form>
@@ -191,6 +220,35 @@ export default function Contact() {
           transition={{ duration: 0.4, delay: 0.08 }}
           className="flex flex-col gap-5"
         >
+          {/* Copy email pill */}
+          <div className="glass flex items-center justify-between gap-3 rounded-3xl px-5 py-4">
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="icon-tile h-10 w-10 shrink-0 bg-primary/10 text-primary">
+                <FiMail size={17} />
+              </span>
+              <div className="min-w-0">
+                <p className="mono-label text-[11px] text-subtle">
+                  Direct email
+                </p>
+                <p className="truncate text-base font-semibold text-ink select-all">
+                  {EMAIL}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={copyEmail}
+              aria-label="Copy email address"
+              className="icon-btn h-9 w-9 shrink-0"
+            >
+              {copied ? (
+                <Check size={15} className="text-emerald" />
+              ) : (
+                <Copy size={15} />
+              )}
+            </button>
+          </div>
+
           {contactDetails.map((detail) => {
             const Icon = detail.icon;
             return (
@@ -199,31 +257,28 @@ export default function Contact() {
                 href={detail.href}
                 target={detail.external ? "_blank" : undefined}
                 rel={detail.external ? "noopener noreferrer" : undefined}
-                className="card card-sm card-hover flex items-center gap-4 p-4"
+                className="glass glass-hover flex items-center gap-4 rounded-3xl p-4"
               >
-                <span
-                  className="flex h-11 w-11 shrink-0 items-center justify-center border-[3px] border-ink shadow-[3px_3px_0_0_#1b1b1b]"
-                  style={{ backgroundColor: detail.soft, color: detail.color }}
-                >
+                <span className={`icon-tile h-11 w-11 shrink-0 ${detail.tile}`}>
                   <Icon size={19} />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="mono-label text-[10px] text-muted">
+                  <p className="mono-label text-[11px] text-subtle">
                     {detail.label}
                   </p>
-                  <p className="mt-1 truncate text-sm font-semibold">
+                  <p className="mt-1 truncate text-base font-semibold text-ink">
                     {detail.value}
                   </p>
                 </div>
-                <ArrowUpRight size={17} className="shrink-0" />
+                <ArrowUpRight size={17} className="shrink-0 text-subtle" />
               </a>
             );
           })}
 
-          <div className="card p-4">
-            <div className="flex items-center justify-between gap-3 border-b-[3px] border-ink pb-3">
-              <span className="mono-label">{"// Social"}</span>
-              <Mail size={15} />
+          <div className="glass rounded-3xl p-5">
+            <div className="flex items-center justify-between gap-3 border-b border-line/40 pb-3">
+              <span className="mono-label text-ink">{"// Social"}</span>
+              <span className="tag">4 profiles</span>
             </div>
             <div className="mt-4 flex flex-wrap gap-2.5">
               {socials.map((social) => {

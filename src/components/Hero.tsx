@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowRight, FileText } from "lucide-react";
-import { FiGithub, FiLinkedin, FiTwitter, FiFacebook } from "react-icons/fi";
+import { ArrowRight, ArrowUpRight, FileText } from "lucide-react";
+import { FiGithub, FiLinkedin } from "react-icons/fi";
 
 const socials = [
   {
@@ -20,34 +20,20 @@ const socials = [
     icon: FiLinkedin,
     color: "#0A66C2",
   },
-  {
-    label: "Twitter",
-    href: "https://twitter.com/",
-    icon: FiTwitter,
-    color: "#1DA1F2",
-  },
-  {
-    label: "Facebook",
-    href: "https://facebook.com/",
-    icon: FiFacebook,
-    color: "#1877F2",
-  },
 ];
 
 const phrases = [
   "React · Next.js · TypeScript · Tailwind CSS",
-  "Responsive, component-based UI development",
-  "Turning ideas into user-friendly web experiences",
+  "Building Responsive, Modern Interfaces",
+  "Turning Ideas into Functional Web Apps",
 ];
 
 const stats = [
-  { label: "Department", value: "CSE" },
-  { label: "Academic status", value: "4th Year · 7th Sem" },
-  { label: "Professional focus", value: "Front-End" },
+  { label: "Primary focus", value: "Front-End Development" },
   { label: "Core stack", value: "React / Next.js" },
+  { label: "Also building with", value: "TypeScript · Tailwind" },
+  { label: "Academic", value: "4th Year" },
 ];
-
-const statTints = ["bg-panel-2", "bg-lime", "bg-cyan", "bg-surface"];
 
 export default function Hero() {
   const [typed, setTyped] = useState(phrases[0]);
@@ -98,137 +84,197 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="shell pb-16 pt-8 lg:pb-24 lg:pt-12">
-      <div className="card card-lg p-4 sm:p-5 lg:p-7">
-        {/* Terminal title bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b-[3px] border-ink pb-4">
-          <div className="flex items-center gap-2">
-            <span className="h-3.5 w-3.5 border-2 border-ink bg-pink" />
-            <span className="h-3.5 w-3.5 border-2 border-ink bg-lime" />
-            <span className="h-3.5 w-3.5 border-2 border-ink bg-cyan" />
-            <span className="mono-label ml-2 hidden text-muted sm:inline">
-              bash ~ hasan-portfolio.sh
+    <section id="home" className="shell pb-16 pt-10 sm:pt-14 lg:pb-24 lg:pt-20">
+      <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+        {/* Left column — introduction */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="lg:col-span-7"
+        >
+          {/* Availability pill */}
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-white/70 bg-surface/90 px-4 py-1.5 shadow-sm backdrop-blur-md">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald opacity-70" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald" />
+            </span>
+            <span className="mono-label text-[10px] text-muted">
+              Front-End Developer · Open to opportunities
             </span>
           </div>
-          <span className="tag bg-lime">
-            <span className="h-2 w-2 animate-pulse bg-ink" />
-            Sys status: online
-          </span>
-        </div>
 
-        <div className="grid gap-8 pt-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:pt-8">
-          {/* Introduction */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="tag bg-cyan">{"// Front-End Developer"}</span>
+          <h1 className="h-hero mt-6">
+            Turning ideas into{" "}
+            <span className="gradient-text">meaningful web experiences.</span>
+          </h1>
 
-            <h1 className="h-hero mt-5">
-              Building clean, fast &amp; responsive web experiences.
-            </h1>
+          {/* Typewriter line */}
+          <div className="code-panel mt-6 max-w-xl px-4 py-3.5 sm:px-5">
+            <div className="flex items-start gap-2 font-mono text-[13px] leading-relaxed sm:text-sm">
+              <span className="shrink-0 select-none text-cyan">&gt;</span>
+              <div className="min-w-0">
+                <span className="font-medium text-white/70">i build with:</span>
+                <span className="ml-1.5 wrap-break-word font-bold text-cyan">
+                  {typed}
+                </span>
+                <span className="ml-0.5 inline-block h-3.5 w-2 translate-y-0.5 animate-pulse bg-cyan" />
+              </div>
+            </div>
+          </div>
 
-            {/* Typewriter terminal output */}
-            <div className="mt-6 border-4 border-ink bg-ink p-4 shadow-[8px_8px_0_0_#1b1b1b]">
-              <div className="flex items-start gap-2 font-mono text-[13px] leading-relaxed sm:text-sm">
-                <span className="shrink-0 select-none text-cyan">&gt;</span>
-                <div className="min-w-0">
-                  <span className="font-bold text-white">i build with:</span>
-                  <span className="ml-1.5 font-bold break-words text-lime">
-                    {typed}
+          <p className="mt-6 max-w-xl text-base leading-8 text-muted sm:text-lg sm:leading-9">
+            I enjoy the process of turning ideas into something people can
+            actually use. From shaping intuitive interfaces to building
+            responsive web applications, I&apos;m always exploring better ways
+            to bring design and functionality together. React, Next.js, and
+            TypeScript are my tools of choice, and every project is an
+            opportunity to learn, experiment, and build something better.
+          </p>
+
+          {/* Actions */}
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <Link href="#projects" className="btn btn-primary">
+              View Projects
+              <ArrowRight size={16} />
+            </Link>
+
+            <button type="button" className="btn btn-ghost" aria-label="Resume">
+              <FileText size={16} />
+              Download Resume
+            </button>
+          </div>
+
+          {/* Social links */}
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <span className="mono-label text-subtle">Connect //</span>
+            <div className="flex flex-wrap gap-2.5">
+              {socials.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="icon-btn"
+                  >
+                    <Icon size={17} style={{ color: social.color }} />
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Right column — portrait card */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.12 }}
+          className="relative mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none"
+        >
+          <div className="relative">
+            {/* Soft gradient aura */}
+            <div className="absolute -inset-2 rounded-4xl bg-linear-to-tr from-primary/25 via-cyan/20 to-rose-soft/40 opacity-75 blur-xl" />
+
+            <div className="glass relative overflow-hidden rounded-4xl p-4 shadow-2xl">
+              {/* Card header */}
+              <div className="mb-3 flex items-center justify-between rounded-2xl border border-line/30 bg-white/60 px-3 py-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-rose-400" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                </div>
+                <span className="font-mono text-[11px] tracking-wider text-subtle">
+                  HASAN_IMRAN.NAZIR
+                </span>
+              </div>
+
+              {/* Portrait */}
+              <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-linear-to-br from-ink via-[#1c2338] to-[#2b3350] shadow-inner">
+                <Image
+                  src="/Image.png"
+                  alt="Hasan Imran Nazir"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 80vw, 32vw"
+                  className="object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-ink/70 via-transparent to-transparent" />
+
+                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
+                  <div>
+                    <p className="font-display text-lg font-bold text-white">
+                      Hasan Imran Nazir
+                    </p>
+                    <p className="font-mono text-[11px] text-white/80">
+                      Front-End Developer
+                    </p>
+                  </div>
+                  <span className="tag border-white/25 bg-white/85 text-ink">
+                    CSE · Feni Uni
                   </span>
-                  <span className="ml-0.5 inline-block h-3.5 w-2 translate-y-0.5 animate-pulse bg-lime" />
+                </div>
+              </div>
+
+              {/* Specification ribbon */}
+              <div className="mt-3 grid grid-cols-2 gap-2 text-center">
+                <div className="rounded-xl border border-line/30 bg-white/70 px-3 py-2">
+                  <span className="block font-mono text-[11px] uppercase tracking-wider text-subtle">
+                    Discipline
+                  </span>
+                  <span className="mono-label text-[12px] text-primary">
+                    Front-End Development
+                  </span>
+                </div>
+                <div className="rounded-xl border border-line/30 bg-white/70 px-3 py-2">
+                  <span className="block font-mono text-[11px] uppercase tracking-wider text-subtle">
+                    Studying
+                  </span>
+                  <span className="mono-label text-[12px] text-ink">
+                    CSE · 4th Year
+                  </span>
                 </div>
               </div>
             </div>
 
-            <p className="mt-6 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
-              I&apos;m Hasan Imran Nazir, a Computer Science and Engineering
-              student at Feni University who enjoys turning ideas into
-              responsive, accessible, and user-friendly interfaces with React
-              and Next.js.
-            </p>
-
-            <div className="mt-7 flex flex-wrap items-center gap-4">
-              <Link href="#projects" className="btn btn-primary">
-                View Projects
-                <ArrowRight size={16} />
-              </Link>
-
-              <button type="button" className="btn btn-outline" aria-label="Resume">
-                <FileText size={16} />
-                Resume
-              </button>
-            </div>
-
-            {/* Social links */}
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <span className="mono-label text-muted">Connect //</span>
-              <div className="flex flex-wrap gap-2.5">
-                {socials.map((social) => {
-                  const Icon = social.icon;
-                  return (
-                    <a
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.label}
-                      className="icon-btn"
-                    >
-                      <Icon size={17} style={{ color: social.color }} />
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Profile photo — transparent cutout on a brutalist colour block */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mx-auto w-full max-w-sm lg:max-w-none"
-          >
-            <div className="relative aspect-square overflow-hidden border-4 border-ink bg-lime shadow-[8px_8px_0_0_#1b1b1b]">
-              <Image
-                src="/Image.png"
-                alt="Hasan Imran Nazir"
-                fill
-                priority
-                sizes="(max-width: 1024px) 80vw, 32vw"
-                className="object-contain object-bottom p-4"
-              />
-            </div>
-
-            <div className="mt-4 flex items-center justify-between gap-3 border-[3px] border-ink bg-surface px-4 py-3 shadow-[4px_4px_0_0_#1b1b1b]">
-              <div className="min-w-0">
-                <p className="h-card truncate text-sm">Hasan Imran Nazir</p>
-                <p className="mono-label mt-1 text-[10px] text-muted">
-                  Front-End Developer
-                </p>
-              </div>
-              <span className="tag shrink-0 bg-pink-soft">CSE · Feni Uni</span>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Quick facts */}
-        <div className="mt-8 grid grid-cols-2 gap-3 border-t-[3px] border-ink pt-5 md:grid-cols-4">
-          {stats.map((stat, index) => (
-            <div
-              key={stat.label}
-              className={`border-[3px] border-ink p-3 shadow-[4px_4px_0_0_#1b1b1b] ${statTints[index]}`}
-            >
-              <span className="mono-label text-[10px] text-muted">
-                {stat.label}
+            {/* Floating badge 1 */}
+            <div className="absolute -top-5 -left-4 hidden items-center gap-2.5 rounded-2xl border border-white/80 bg-white/85 px-3.5 py-2 shadow-lg backdrop-blur-md sm:flex">
+              <span className="h-2 w-2 rounded-full bg-primary" />
+              <span className="mono-label text-[11px] text-ink">
+                React &amp; Next.js
               </span>
-              <p className="h-card mt-2 text-sm sm:text-base">{stat.value}</p>
             </div>
-          ))}
-        </div>
+
+            {/* Floating badge 2 */}
+            <div className="absolute -right-4 -bottom-5 hidden items-center gap-2.5 rounded-2xl border border-white/80 bg-white/85 px-4 py-2.5 shadow-lg backdrop-blur-md sm:flex">
+              <span className="mono-label text-[11px] text-secondary">
+                TypeScript
+              </span>
+              <ArrowUpRight size={14} className="text-primary" />
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Quick facts */}
+      <div className="mt-12 grid grid-cols-2 gap-4 border-t border-line/40 pt-6 md:grid-cols-4">
+        {stats.map((stat, index) => (
+          <div key={stat.label} className="space-y-1">
+            <p className="font-display text-xl font-extrabold text-ink sm:text-2xl">
+              {index === 0 ? (
+                <span className="gradient-text">{stat.value}</span>
+              ) : (
+                stat.value
+              )}
+            </p>
+            <span className="mono-label text-[10px] text-subtle">
+              {stat.label}
+            </span>
+          </div>
+        ))}
       </div>
     </section>
   );

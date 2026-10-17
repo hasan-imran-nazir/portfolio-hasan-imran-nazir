@@ -18,9 +18,9 @@ export const projects: Project[] = [
     slug: "instarecipe",
     name: "InstaRecipe",
     shortDescription:
-      "A recipe-focused web application intended to help users discover and explore recipes in an organized interface.",
+      "A recipe-focused web application that helps users discover and explore recipes through a clean, organized interface.",
     description:
-      "InstaRecipe is a recipe-focused web application intended to help users discover and explore recipes in an organized interface. The project is still being finalised, so the feature list and links will be updated here as they are confirmed.",
+      "InstaRecipe is a recipe-focused web application that helps users discover and explore recipes through an organized interface. It was built with React and Next.js, styled with Tailwind CSS, and focused on a clean, easy-to-navigate layout across devices.",
     image: "/instarecipe.png",
     technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
     liveLink: "#",
